@@ -43,7 +43,7 @@
             ]
         },
         "donate": {
-            "alipay": "./source/images/donate.png",
+            "alipay": "/static/paycode.png",
             "title": "",
             "button": "赞赏",
             "alipayText": " "
