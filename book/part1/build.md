@@ -1,6 +1,6 @@
 # 概览
 
-这个部分主要讲一下vue源码的构建流程，当然只针对web环境下。
+这个部分主要讲一下vue源码的构建流程，当然只针对web环境下。
 
 # 开始
 
@@ -14,7 +14,7 @@
         "build": "node scripts/build.js",
     },
 
-可以看到开发分为4种情况，构建就只是node执行`build.js`即可，下面慢慢分析开发和构建情况。
+可以看到开发分为4种情况，构建就只是node执行`build.js`即可，下面慢慢分析开发和构建情况。
 
 ## Dev
 
@@ -27,7 +27,7 @@ dev分为四种情况，分别是`full-dev`, `runtime-cjs`, `runtime-esm`, `comp
 | 完整版 (生产环境) | vue.min.js | | |
 | 只包含运行时版 (生产环境)| vue.runtime.min.js | | |
 
-**说明**
+**说明**
 
 - **完整版**：同时包含编译器和运行时的版本。
 
@@ -41,7 +41,7 @@ dev分为四种情况，分别是`full-dev`, `runtime-cjs`, `runtime-esm`, `comp
 
 - **ES Module**：ES module 版本用来配合现代打包工具比如 webpack 2 或 Rollup。这些打包工具的默认文件 (pkg.module) 是只包含运行时的 ES Module 版本 (vue.runtime.esm.js)。
 
-也就是说**完整版就是编译器加运行时**，这个编译器作用是解析`template`标签为render函数。如果你需要在客户端编译模板 (比如传入一个字符串给 template 选项，或挂载到一个元素上并以其 DOM 内部的 HTML 作为模板)，就将需要加上编译器，即完整版：
+也就是说**完整版就是编译器加运行时**，这个编译器作用是解析`template`标签为render函数。如果你需要在客户端编译模板 (比如传入一个字符串给 template 选项，或挂载到一个元素上并以其 DOM 内部的 HTML 作为模板)，就将需要加上编译器，即完整版：
 
     // 需要编译器
     new Vue({
@@ -58,15 +58,15 @@ dev分为四种情况，分别是`full-dev`, `runtime-cjs`, `runtime-esm`, `comp
 
 dev生成的文件分别如下：
 
-    dev => vue.js:编译+加运行时
+    dev => vue.js:编译+加运行时
     dev:cjs => vue.runtime.common.js: commonjs格式的运行时
     dev:esm => vue.runtime.esm.js: es module格式的运行时
 
-`dev:compiler`是一个独立的模块，用以实现模板编译为render函数功能，以后专门分析。
+`dev:compiler`是一个独立的模块，用以实现模板编译为render函数功能，以后专门分析。
 
 ## Build
 
-开发的时候肯定是使用dev一个一个模块和系统进行开发，但是构建的时候肯定是将开发中相关的模块和系统都进行打包甚至某些做压缩丑化操作最后生成一系列的立即可使用的目标文件。本质就是运行多个相关构建任务。这里只考虑web情况下，所以会生成所有web有关的构建文件，可以说build是dev的整合和压缩优化。下面是该命令的生成文件：
+开发的时候肯定是使用dev一个一个模块和系统进行开发，但是构建的时候肯定是将开发中相关的模块和系统都进行打包甚至某些做压缩丑化操作最后生成一系列的立即可使用的目标文件。本质就是运行多个相关构建任务。这里只考虑web情况下，所以会生成所有web有关的构建文件，可以说build是dev的整合和压缩优化。下面是该命令的生成文件：
 
     dist
     ├── vue.common.js
@@ -118,9 +118,9 @@ function write (dest, code, zip) {
     ......
 }
 ```
-从上面可以看出大概流程就是获取所有构建配置，然后根据脚本参数(使用process.argv)过滤指定配置，最后分别对这些配置进行构建。很简单自然的流程。
+从上面可以看出大概流程就是获取所有构建配置，然后根据脚本参数(使用process.argv)过滤指定配置，最后分别对这些配置进行构建。很简单自然的流程。
 
-有意思的是`build函数`
+有意思的是`build函数`
 
 ```
 function build (builds) {
@@ -194,7 +194,7 @@ const builds = {
    // 省略
    ......
 }
-// 根据名称生成构建配置
+// 根据名称生成构建配置
 function genConfig (name) {
   const opts = builds[name]
   const config = {
@@ -231,7 +231,7 @@ function genConfig (name) {
   return config
 }
 
-// 如果有target参数，则使用target参数对应配置，否则暴露获取配置的方法。
+// 如果有target参数，则使用target参数对应配置，否则暴露获取配置的方法。
 if (process.env.TARGET) {
   module.exports = genConfig(process.env.TARGET)
 } else {
@@ -240,13 +240,13 @@ if (process.env.TARGET) {
 }
 ```
 
-这个文件代码也比较简单，就是如果是通过node repl进行构建操作的话就直接返回构建配置（比如dev的那几个构建命令），否则这个文件返回两个可以生成构建配置的函数。
+这个文件代码也比较简单，就是如果是通过node repl进行构建操作的话就直接返回构建配置（比如dev的那几个构建命令），否则这个文件返回两个可以生成构建配置的函数。
 
 这个文件值得注意的是resolve方法，该方法考虑了别名的情况，如果是别名则获取别名路径然后再将剩余路径进行拼接得到最后的路径，否则直接从根路径寻找。
 
 ## alias.js
 
-而最后`alias.js`则更简单了，就是别名的路径对应的散列。
+而最后`alias.js`则更简单了，就是别名的路径对应的映射。
 
 ```
 const resolve = p => path.resolve(__dirname, '../', p)

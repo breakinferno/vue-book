@@ -20,6 +20,8 @@
         "splitter",
         "expandable-chapters-small",
         "anchors",
+        "sectionx",
+        "expandable-chapters",
 
         "github",
         "github-buttons",
@@ -32,6 +34,9 @@
         "github": {
             "url": "https://github.com/breakinferno"
         },
+        "sectionx": {
+            "tag": "b"
+        },
         "github-buttons": {
             "buttons": [{
                 "user": "Breakinferno",
@@ -39,8 +44,7 @@
                 "type": "star",
                 "size": "small",
                 "count": true
-                }
-            ]
+            }]
         },
         "donate": {
             "alipay": "/static/paycode.png",
@@ -74,7 +78,7 @@
         "anchor-navigation-ex": {
             "showLevel": false
         },
-        "favicon":{
+        "favicon": {
             "shortcut": "./source/images/favicon.jpg",
             "bookmark": "./source/images/favicon.jpg",
             "appleTouch": "./source/images/apple-touch-icon.jpg",

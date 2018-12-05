@@ -1,6 +1,6 @@
 # 概览
 
-分析代码之前肯定要弄清楚项目的目录结构，清楚每个文件是做什么的，从而对项目有个整体的认识。下面是vue2.x源码的整体目录结构。
+分析代码之前肯定要弄清楚项目的目录结构，清楚每个文件是做什么的，从而对项目有个整体的认识。下面是vue2.x源码的整体目录结构。
 
 ```
 ├── BACKERS.md
@@ -86,7 +86,7 @@
 └── yarn.lock
 ```
 
-其中dist文件夹放置打包构建之后的文件，test测试文件夹，examples放置例子。由于vue项目使用flow来做静态类型检测，这里flow文件夹放置相关内容，types放置类型定义。我们把重点放在scripts文件夹和src文件夹上。
+其中dist文件夹放置打包构建之后的文件，test测试文件夹，examples放置例子。由于vue项目使用flow来做静态类型检测，这里flow文件夹放置相关内容，types放置类型定义。我们把重点放在scripts文件夹和src文件夹上。
 
 ## Src
 
@@ -127,7 +127,7 @@
     │   └── write.js
     ├── sfc                     # 负责.vue 文件解析,生成javascript对象
     │   └── parser.js
-    └── shared                  # 共享代码，共同常量和工具函数
+    └── shared                  # 共享代码，共同常量和工具函数
         ├── constants.js
         └── util.js
 
@@ -135,4 +135,4 @@
 
 ## Scripts
 
-scripts 文件夹是放置构建项目的构建入口，构建脚本所在地。负责根据不同命令构建不同环境下的代码放置到dist目录。其核心是`build.js`, `alias.js`, `config.js`。其详细内容看下一章[构建](/book/part1/build.md)
+scripts 文件夹是放置构建项目的构建入口，构建脚本所在地。负责根据不同命令构建不同环境下的代码放置到dist目录。其核心是`build.js`, `alias.js`, `config.js`。其详细内容看下一章[构建](/book/part1/build.md)
