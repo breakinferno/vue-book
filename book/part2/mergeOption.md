@@ -8,12 +8,21 @@
 顾名思义，这节讲vue初始化时合并配置的行为，我们的关注点在于vue合并了哪些配置项，这些配置项是在哪里声明的。下面我就让我们深入源码来一个一个找出这两个问题的答案吧。虽然没有什么用。废话不多说，让我们来看看源码吧：
 
 ```
-// 这里就是主要的代码了
-vm.$options = mergeOptions(
-    resolveConstructorOptions(vm.constructor),  // 原型配置，主要是一些全局的公用配置，比如global api
-    options || {},  // 用户传入配置项
-    vm              // 实例配置项，这里主要是_isVue和uid
-)
+// merge options
+if (options && options._isComponent) {
+    // optimize internal component instantiation
+    // since dynamic options merging is pretty slow, and none of the
+    // internal component options needs special treatment.
+    initInternalComponent(vm, options)
+} else {
+    // 我们的实例必然走这里
+    vm.$options = mergeOptions(
+        resolveConstructorOptions(vm.constructor), // 解析构造函数配置
+        options || {},  // 用户传入配置项
+        vm              // 实例配置项，这里主要是_isVue和uid
+    )
+}
+
 
 /**
  * Merge two option objects into a new one.
@@ -51,7 +60,7 @@ export function mergeOptions (
     }
   }
 
-// 处理构造器配置项
+// 处理构造器配置项 注意只有子类才有super我们这里简单的例子初始化Ctor.super为undefined，故只返回构造器options属性
 export function resolveConstructorOptions (Ctor: Class<Component>) {
   let options = Ctor.options
   if (Ctor.super) {

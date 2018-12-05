@@ -1,4 +1,19 @@
-## New
+# 前言
+我们使用最简单的情形来分析整个初始化流程。即：
+
+```
+<div id="app">{{message}}</div>
+
+var vm = new Vue({
+    el: '#app',
+    data: {
+        message: 'hello vue'
+    }
+})
+
+```
+
+## 开始
 
 我们在上章简单的了解了Vue初始化的运行流程。还记得这段代码吗？位于`/src/core/instance/index.js`
 ```
