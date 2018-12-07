@@ -295,23 +295,23 @@ export function initGlobalAPI (Vue: GlobalAPI) {
       )
     }
   }
-  Object.defineProperty(Vue, 'config', configDef)
+  Object.defineProperty(Vue, 'config', configDef)   // 定义Vue.config,你可以再api中看见这些配置项
 
   // exposed util methods.
   // NOTE: these are not considered part of the public API - avoid relying on
   // them unless you are aware of the risk.
-  Vue.util = {          // 一些工具方法
+  Vue.util = {          // 定义一些工具方法
     warn,
-    extend,
+    extend,             
     mergeOptions,
-    defineReactive
+    defineReactive      // 我想你应该注意这个函数，后面细讲
   }
 
   Vue.set = set       // Vue.set()
   Vue.delete = del    // Vue.delete()
   Vue.nextTick = nextTick //Vue.nextTick()
 
-  Vue.options = Object.create(null)
+  Vue.options = Object.create(null)                   // Vue.options
   ASSET_TYPES.forEach(type => {                       // ASSET_TYPES = ['component', 'directive', 'filter']
     Vue.options[type + 's'] = Object.create(null)
   })
@@ -320,7 +320,7 @@ export function initGlobalAPI (Vue: GlobalAPI) {
   // components with in Weex's multi-instance scenarios.
   Vue.options._base = Vue
 
-  extend(Vue.options.components, builtInComponents)
+  extend(Vue.options.components, builtInComponents)   // 这里有个内置的组件，其实就是KeepAlive组件
 
   initUse(Vue)      // Vue.use()
   initMixin(Vue)    // Vue.mixin()
@@ -356,6 +356,8 @@ export function initUse (Vue: GlobalAPI) {
 PS: 为了便于查阅我们所见到的Vue的方法，我会把查看源码过程中所有遇到的方法和属性整理到[附录](/book/extra/)中
 好了我们现在对global api有了一个大致的了解，这里并不会详细的介绍每个api，以后使用到时才详细的介绍。下一章我们会详细的介绍Vue的详细的初始化过程，这章只是大致了解了整个项目的结构和简单的初始化流程。
 
+最后我们可以得出经过globalApi处理之后Vue构造函数的样子：
+![](2018-12-07-17-36-54.png)
 详细的全局api的配置项[在这里](/book/extra/vue_global_api.md)
 
 总结： globalApi 给**构造函数**添加了许多方法和属性，包括组件，扩展方法，过滤器等
